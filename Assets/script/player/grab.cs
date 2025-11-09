@@ -25,6 +25,10 @@ public class grab : MonoBehaviour
             {
                 cook();
             }
+            else if (furnitureInRange.TryGetComponent(out table Table))
+            {
+                table();
+            }
         }
 
     }
@@ -71,6 +75,10 @@ public class grab : MonoBehaviour
         {
             stove.grabbed();
         }
+        if (furnitureInRange != null && furnitureInRange.TryGetComponent(out table Table))
+        {
+            Table.grabbed();
+        }
 
     }
 
@@ -95,5 +103,15 @@ public class grab : MonoBehaviour
         }
     }
 
+    public void table()
+    {
+        if (ObjectGrabbed != null && furnitureInRange.TryGetComponent(out table Table))
+        {
+            Table.taro = ObjectGrabbed;
+            ObjectGrabbed = null;
+
+
+        }
+    }
 
 }
