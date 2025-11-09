@@ -22,7 +22,7 @@ public class grab : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Item") && other.gameObject.CompareTag("Item") != ObjectGrabbed)
+        if (other.gameObject.CompareTag("Item") && other.gameObject != ObjectGrabbed)
         {
             Objectinrange = other.gameObject;
             Debug.Log("barang di deteksi");
@@ -38,7 +38,7 @@ public class grab : MonoBehaviour
 
     public void grabbing()
     {
-        if (Objectinrange != null)
+        if (Objectinrange != null && ObjectGrabbed == null)
         {
             ObjectGrabbed = Objectinrange;
             ObjectGrabbed.transform.position = held.transform.position;
