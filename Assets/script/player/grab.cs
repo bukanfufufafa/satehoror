@@ -27,7 +27,8 @@ public class grab : MonoBehaviour
             }
             else if (furnitureInRange.TryGetComponent(out table Table))
             {
-                table();
+                if (Table.taro == null) { table(); }
+                
             }
         }
 
