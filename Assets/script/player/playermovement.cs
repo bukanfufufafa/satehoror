@@ -10,7 +10,7 @@ public class PlayerMove2D : MonoBehaviour
     private float moveInputY;
     private float moveInputX;
     public int direction = 1; //1 = bawah, 2 = atas, 3 = kiri, 4 = kanan
-    public Transform hand;
+    public Transform detector;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -37,21 +37,24 @@ public class PlayerMove2D : MonoBehaviour
             else if (moveInputY < 0)
                 direction = 1; 
         }
-
-        if (direction == 1)
-        { hand.transform.localPosition = new Vector2(0, -3.2f); }
-        else if (direction == 2)
+        if (detector != null)
         {
-            hand.transform.localPosition = new Vector2(0, 3.2f);
+            if (direction == 1)
+            { detector.transform.localPosition = new Vector2(0, -3.2f); }
+            else if (direction == 2)
+            {
+                detector.transform.localPosition = new Vector2(0, 3.2f);
+            }
+            else if (direction == 3)
+            {
+                detector.transform.localPosition = new Vector2(-2.74f, -0.35f);
+            }
+            else if (direction == 4)
+            {
+                detector.transform.localPosition = new Vector2(2.74f, 0.35f);
+            }
         }
-        else if (direction == 3)
-        {
-            hand.transform.localPosition = new Vector2(-2.74f, -0.35f);
-        }
-        else if (direction == 4)
-        {
-            hand.transform.localPosition = new Vector2(2.74f, 0.35f);
-        }
+        
 
 
     }
