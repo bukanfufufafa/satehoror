@@ -96,9 +96,13 @@ public class grab : MonoBehaviour
     {
         if (ObjectGrabbed != null && furnitureInRange.TryGetComponent(out Stove stove) && ObjectGrabbed.TryGetComponent(out dagingmentah dagingmentah))
         {
-            dagingmentah.grabbable = false;
-            stove.daging = ObjectGrabbed;
-            ObjectGrabbed = null;   
+            if (stove.daging == null)
+            {
+                dagingmentah.grabbable = false;
+                stove.daging = ObjectGrabbed;
+                ObjectGrabbed = null;
+
+            }
 
 
         }
