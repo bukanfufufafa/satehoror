@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerMove2D : MonoBehaviour
 {
-    public float moveSpeed = 5f; 
-    
+    public float moveSpeed = 5f;
+    public float sprintSpeed = 1f;
+    public float tired = 4f;
+    [SerializeField] private float defaultTired;
     private Rigidbody2D rb;
     private float moveInputY;
     private float moveInputX;
@@ -14,6 +16,7 @@ public class PlayerMove2D : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        defaultTired = tired;
     }
 
     void Update()
@@ -21,7 +24,18 @@ public class PlayerMove2D : MonoBehaviour
 
         moveInputX = Input.GetAxisRaw("Horizontal");
         moveInputY = Input.GetAxisRaw("Vertical");
+        if (Input.GetKey(KeyCode.J))
+        {
+            tired -= Time.deltaTime;
+            
+        }
+        else if (Input.GetKeyDown(KeyCode.J))
+        {
+            
+            sprint();
+        }
         
+        else { unsprint(); }
         //buat detect value posisi terakhir
         if (Mathf.Abs(moveInputX) > 0.1f)
         {
@@ -65,7 +79,19 @@ public class PlayerMove2D : MonoBehaviour
         rb.linearVelocity = new Vector2(moveInputX * moveSpeed, moveInputY * moveSpeed);
     }
 
-    
+    private void sprint()
+    {
+        moveSpeed = moveSpeed + sprintSpeed;
+        
+    }
 
-
+    private void unsprint()
+    {
+        moveSpeed = moveSpeed - sprintSpeed;
+        if (tired < defaultTired)
+        {
+            tired += Time.deltaTime;
+        }
+        
+    }
 }

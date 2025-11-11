@@ -150,5 +150,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48e724c7002ccd4fb23c1f07a94130f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::sate
-  namaItem: 
+  namaItem: sate kambing
   dagingSate: 0

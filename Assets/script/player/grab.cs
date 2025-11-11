@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class grab : MonoBehaviour
@@ -9,13 +10,16 @@ public class grab : MonoBehaviour
     
 
     // Update is called once per frame
+
+    
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.E) && ObjectGrabbed == null) 
+        
+        if (Input.GetKeyUp(KeyCode.K) && ObjectGrabbed == null) 
         {
             grabbing();
         }
-        else if (Input.GetKeyUp(KeyCode.E) && ObjectGrabbed != null && furnitureInRange != null)
+        else if (Input.GetKeyUp(KeyCode.K) && ObjectGrabbed != null && furnitureInRange != null)
         {
             if (furnitureInRange.TryGetComponent(out Garbage garbage))
             {
@@ -27,7 +31,7 @@ public class grab : MonoBehaviour
             }
             else if (furnitureInRange.TryGetComponent(out table Table))
             {
-                if (Table.taro == null) { table(); }
+                if (Table.taro == null) { PutIntable(); }
                 
             }
         }
@@ -38,11 +42,14 @@ public class grab : MonoBehaviour
     {
         if (other.TryGetComponent(out Item item) && other.gameObject != ObjectGrabbed)
         {
+            
             Objectinrange = other.gameObject;
             Debug.Log("barang di deteksi");
+            
         }
         if (other.TryGetComponent(out Furniture furniture))
         {
+            
             furnitureInRange = other.gameObject;
             Debug.Log("barang di deteksi");
         }
@@ -53,6 +60,7 @@ public class grab : MonoBehaviour
     
     public void OnTriggerExit2D(Collider2D other)
     {
+        
         Objectinrange = null;
         furnitureInRange = null;
         Debug.Log("barang keluar");
@@ -108,7 +116,7 @@ public class grab : MonoBehaviour
         }
     }
 
-    public void table()
+    public void PutIntable()
     {
         if (ObjectGrabbed != null && furnitureInRange.TryGetComponent(out table Table))
         {
@@ -119,4 +127,8 @@ public class grab : MonoBehaviour
         }
     }
 
+    public void message()
+    {
+
+    }
 }
