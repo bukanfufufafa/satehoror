@@ -4,12 +4,12 @@ using UnityEngine.SceneManagement;
 public class Pause : MonoBehaviour
 {
     public GameObject pausePanel;
-    public GameObject SettingsPanel;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         pausePanel.SetActive(false);
-        SettingsPanel.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -35,18 +35,24 @@ public class Pause : MonoBehaviour
 
     public void MainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
+
     }
 
-    public void Settings()
+    public void RestartGame()
     {
-        SettingsPanel.SetActive(true);
-        pausePanel.SetActive(false);
+        // Pastikan waktu berjalan normal
+        Time.timeScale = 1f;
+
+        // Ambil nama scene aktif dan muat ulang
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 
     public void back()
     {
-        SettingsPanel.SetActive(false );
+       
         pausePanel.SetActive(true);
     }
 }
