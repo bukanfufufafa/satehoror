@@ -150,5 +150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e99b15201b05e547bee954aae40bd6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::dagingmentah
-  namaItem: 
+  namaItem: daging kambing
   daging: 0
+  grabbable: 1

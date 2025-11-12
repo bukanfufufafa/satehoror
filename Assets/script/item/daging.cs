@@ -8,5 +8,5 @@ public class dagingmentah : Item
         
     }
     public tipeDaging daging;
-    public bool grabbable = true;
+    
 }
