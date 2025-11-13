@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using static sate;
 
 public class grab : MonoBehaviour
 {
@@ -7,15 +8,16 @@ public class grab : MonoBehaviour
     public GameObject ObjectGrabbed;
     public GameObject furnitureInRange;
     public Transform held;
-    
+
+    [SerializeField] private float deliveryRange = 2f;
+
+
 
     // Update is called once per frame
-
-    
     void Update()
     {
-        
-        if (Input.GetKeyUp(KeyCode.K) && ObjectGrabbed == null) 
+
+        if (Input.GetKeyUp(KeyCode.K) && ObjectGrabbed == null)
         {
             grabbing();
         }
@@ -32,7 +34,13 @@ public class grab : MonoBehaviour
             else if (furnitureInRange.TryGetComponent(out table Table))
             {
                 if (Table.taro == null) { PutIntable(); }
-                
+
+            }
+        } else if (Input.GetKeyUp(KeyCode.K) && ObjectGrabbed != null) {
+            if (ObjectGrabbed.TryGetComponent(out sate sate))
+            {
+                Debug.Log("Sate!");
+                TryDeliverSate(sate.dagingSate);
             }
         }
 
@@ -40,27 +48,39 @@ public class grab : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D other)
     {
-        if (other.TryGetComponent(out Item item) && other.gameObject != ObjectGrabbed)
+        GameObject detectedObject = other.gameObject;
+        Debug.Log("Triggered by: " + detectedObject.name);
+
+
+        if (other.TryGetComponent(out Item item) && detectedObject != ObjectGrabbed)
         {
-            
-            Objectinrange = other.gameObject;
+
+            Objectinrange = detectedObject;
             Debug.Log("barang di deteksi");
-            
+
         }
         if (other.TryGetComponent(out Furniture furniture))
         {
-            
-            furnitureInRange = other.gameObject;
+
+            furnitureInRange = detectedObject;
             Debug.Log("barang di deteksi");
         }
 
 
+        if (detectedObject.CompareTag("Hewan"))
+        {
+            Debug.Log("Hewan entered the trigger!");
 
+            if (Input.GetMouseButton(0))
+            {
+                detectedObject.transform.parent.SendMessage("HitSlay");
+            }
+        }
     }
-    
+
     public void OnTriggerExit2D(Collider2D other)
     {
-        
+
         Objectinrange = null;
         furnitureInRange = null;
         Debug.Log("barang keluar");
@@ -93,10 +113,10 @@ public class grab : MonoBehaviour
 
     public void dump()
     {
-       
+
         if (ObjectGrabbed != null)
         {
-            Destroy(ObjectGrabbed); 
+            Destroy(ObjectGrabbed);
         }
     }
 
@@ -130,5 +150,33 @@ public class grab : MonoBehaviour
     public void message()
     {
 
+    }
+
+    void TryDeliverSate(SateType sateType)
+    {
+        // Cari hantu terdekat
+        GhostAI[] ghosts = FindObjectsOfType<GhostAI>();
+        GhostAI nearestGhost = null;
+        float nearestDistance = deliveryRange;
+
+        foreach (GhostAI ghost in ghosts)
+        {
+            float distance = Vector2.Distance(transform.position, ghost.transform.position);
+            if (distance < nearestDistance)
+            {
+                nearestGhost = ghost;
+                nearestDistance = distance;
+            }
+        }
+
+        if (nearestGhost != null)
+        {
+            nearestGhost.ReceiveSate();
+            dump();
+        }
+        else
+        {
+            Debug.Log("Tidak ada hantu di dekat sini!");
+        }
     }
 }

@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour
 
     public void play()
     {
-        SceneManager.LoadScene("nabil");
+        SceneManager.LoadScene("HewanMovementTest2");
     }
 
     public void credit()
